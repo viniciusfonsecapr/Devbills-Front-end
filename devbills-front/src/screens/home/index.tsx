@@ -11,6 +11,7 @@ export function Home() {
         <div>
           <Button>Nova Transação</Button>
           <Button>Nova Categoria</Button>
+          <Button>Apenas Gerar commit </Button>
         </div>
       </Header>
       <Main>
