@@ -5,6 +5,7 @@ export function App() {
   return (
     <>
       <GlobalStyles />
+      <div></div>
       <Home />
     </>
   );
