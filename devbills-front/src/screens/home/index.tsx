@@ -2,6 +2,7 @@ import { Button } from "../components/button";
 import { Logo } from "../components/logo";
 import { Title } from "../components/title";
 import { Input } from "../components/input";
+import { ButtonIcon } from "../components/button-icon";
 import { Filters, Header, Main, Section, InputGroup } from "./styles";
 import { InputMask } from "@react-input/mask";
 
@@ -37,6 +38,7 @@ export function Home() {
                 label="Fim"
                 placeholder="dd/mm/yyyy"
               />
+              <ButtonIcon />
             </InputGroup>
           </Filters>
         </Section>
