@@ -13,9 +13,14 @@ import {
   ChartContainer,
   ChartContent,
   ChartAction,
+  Aside,
+  SearchTransaction,
+  TransactionGroup,
 } from "./styles";
 import { InputMask } from "@react-input/mask";
 import { Card } from "../components/card";
+import { Transaction } from "../components/transaction";
+import { Dialog } from "../components/dialog";
 
 export function Home() {
   return (
@@ -23,7 +28,7 @@ export function Home() {
       <Header>
         <Logo />
         <div>
-          <Button>Nova Transação</Button>
+          <Dialog trigger={<Button>Nova Transação</Button>}>Olá</Dialog>
           <Button>Nova Categoria</Button>
           <Button>Apenas Gerar commit </Button>
         </div>
@@ -87,7 +92,49 @@ export function Home() {
             <ChartContent />
           </ChartContainer>
         </Section>
-        <aside></aside>
+        <Aside>
+          <header>
+            <Title
+              title={"Transações"}
+              subtitle={"Receitas e gastos no periodo"}
+            />
+            <SearchTransaction>
+              <Input variant="black" placeholder="Procurar transação..." />
+              <ButtonIcon />
+            </SearchTransaction>
+          </header>
+
+          <TransactionGroup>
+            <Transaction
+              id={1}
+              amount={20000}
+              date="09/09/2023"
+              category={{ title: "Alimentação", color: "#ff33bb" }}
+              title="Mercado"
+            />
+            <Transaction
+              id={1}
+              amount={20000}
+              date="09/09/2023"
+              category={{ title: "Alimentação", color: "#ff33bb" }}
+              title="Mercado"
+            />
+            <Transaction
+              id={1}
+              amount={20000}
+              date="09/09/2023"
+              category={{ title: "Alimentação", color: "#ff33bb" }}
+              title="Mercado"
+            />
+            <Transaction
+              id={1}
+              amount={20000}
+              date="09/09/2023"
+              category={{ title: "Alimentação", color: "#ff33bb" }}
+              title="Mercado"
+            />
+          </TransactionGroup>
+        </Aside>
       </Main>
     </>
   );
