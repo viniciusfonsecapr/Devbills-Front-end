@@ -17,10 +17,11 @@ import {
   SearchTransaction,
   TransactionGroup,
 } from "./styles";
-import { InputMask } from "@react-input/mask";
 import { Card } from "../components/card";
 import { Transaction } from "../components/transaction";
-import { Dialog } from "../components/dialog";
+import { CreateCategoryDialog } from "../components/create-category-dialog";
+
+import { InputMask } from "@react-input/mask";
 
 export function Home() {
   return (
@@ -28,9 +29,8 @@ export function Home() {
       <Header>
         <Logo />
         <div>
-          <Dialog trigger={<Button>Nova Transação</Button>}>Olá</Dialog>
-          <Button>Nova Categoria</Button>
-          <Button>Apenas Gerar commit </Button>
+          <Button>Nova Transação</Button>
+          <CreateCategoryDialog />
         </div>
       </Header>
       <Main>
