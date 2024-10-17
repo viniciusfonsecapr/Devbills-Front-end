@@ -1,4 +1,3 @@
-import { Button } from "../components/button";
 import { Logo } from "../components/logo";
 import { Title } from "../components/title";
 import { Input } from "../components/input";
@@ -20,8 +19,10 @@ import {
 import { Card } from "../components/card";
 import { Transaction } from "../components/transaction";
 import { CreateCategoryDialog } from "../components/create-category-dialog";
+import { CreateTransactionDialog } from "../components/create-transaction-dialog copy";
 
 import { InputMask } from "@react-input/mask";
+import { CategoriesPieChart } from "../components/categories-pie-chart";
 
 export function Home() {
   return (
@@ -29,7 +30,7 @@ export function Home() {
       <Header>
         <Logo />
         <div>
-          <Button>Nova Transação</Button>
+          <CreateTransactionDialog />
           <CreateCategoryDialog />
         </div>
       </Header>
@@ -69,7 +70,9 @@ export function Home() {
                 subtitle="Despesas por categoria no periodo"
               />
             </header>
-            <ChartContent />
+            <ChartContent>
+              <CategoriesPieChart />
+            </ChartContent>
           </ChartContainer>
           <ChartContainer>
             <header>
@@ -89,7 +92,7 @@ export function Home() {
                 <ButtonIcon />
               </ChartAction>
             </header>
-            <ChartContent />
+            <ChartContent>{/* <CategoriesPieChart /> */}</ChartContent>
           </ChartContainer>
         </Section>
         <Aside>
