@@ -23,6 +23,7 @@ import { CreateTransactionDialog } from "../components/create-transaction-dialog
 
 import { InputMask } from "@react-input/mask";
 import { CategoriesPieChart } from "../components/categories-pie-chart";
+import { FinancialEvolutionBarChart } from "../components/financial-evolution-bar-chart";
 
 export function Home() {
   return (
@@ -92,7 +93,9 @@ export function Home() {
                 <ButtonIcon />
               </ChartAction>
             </header>
-            <ChartContent>{/* <CategoriesPieChart /> */}</ChartContent>
+            <ChartContent>
+              <FinancialEvolutionBarChart />
+            </ChartContent>
           </ChartContainer>
         </Section>
         <Aside>
