@@ -19,7 +19,7 @@ import {
 import { Card } from "../components/card";
 import { Transaction } from "../components/transaction";
 import { CreateCategoryDialog } from "../components/create-category-dialog";
-import { CreateTransactionDialog } from "../components/create-transaction-dialog copy";
+import { CreateTransactionDialog } from "../components/create-transaction-dialog";
 
 import { InputMask } from "@react-input/mask";
 import { CategoriesPieChart } from "../components/categories-pie-chart";
