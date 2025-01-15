@@ -13,6 +13,7 @@ export class APIService {
       "/categories",
       createCategoryData
     );
+    console.log(data);
 
     return data;
   }
