@@ -33,7 +33,7 @@ export function FetchAPIProvider({ children }: FetchAPIProviderProps) {
     await APIService.createTransaction({
       ...data,
       date: formatDate(data.date),
-      amount: Number(data.amount.replace(/[^0-9]g/, "")),
+      amount: Number(data.amount.replace(/[^0-9]/g, "")),
     });
   }, []);
 

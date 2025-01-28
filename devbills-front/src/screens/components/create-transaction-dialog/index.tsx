@@ -33,7 +33,7 @@ export function CreateTransactionDialog() {
     defaultValues: {
       categoryId: "null",
       title: "",
-      amount: "0",
+      amount: "",
       date: dayjs("2024-01-01").format("DD/MM/YYYY"),
       type: "income",
     },
