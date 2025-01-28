@@ -1,15 +1,16 @@
-import { useCallback, useState } from "react";
-import { Dialog } from "../dialog";
-import { Button } from "../button";
-import { Title } from "../title";
-import { Input } from "../input";
-import { Container } from "./styles";
-import { useForm } from "react-hook-form";
-import { CreateCategoryData } from "../../../validators/types.ts";
-import { theme } from "../../../styles/theme.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createCategorySchema } from "../../../validators/schemas.ts.ts";
-import { useFetchAPI } from "../../../hooks/useFetchAPI.tsx";
+import { useCallback, useState } from "react";
+import { useForm } from "react-hook-form";
+
+import { useFetchAPI } from "../../../hooks/useFetchAPI";
+import { theme } from "../../../styles/theme";
+import { createCategorySchema } from "../../../validators/schemas";
+import { CreateCategoryData } from "../../../validators/types";
+import { Button } from "../button";
+import { Dialog } from "../dialog";
+import { Input } from "../input";
+import { Title } from "../title";
+import { Container } from "./styles";
 
 export function CreateCategoryDialog() {
   const { createCategory, fetchCategories } = useFetchAPI();
@@ -28,39 +29,45 @@ export function CreateCategoryDialog() {
 
   const onSubmit = useCallback(
     async (data: CreateCategoryData) => {
-      console.log(data);
-
       await createCategory(data);
-      await fetchCategories();
-
       handleClose();
+      await fetchCategories();
     },
-    [handleClose, createCategory]
+    [handleClose, createCategory, fetchCategories]
   );
 
   return (
     <Dialog
       open={open}
       onOpenChange={setOpen}
-      trigger={<Button>Nova Categoria</Button>}
+      trigger={<Button>Nova categoria</Button>}
     >
       <Container>
-        <Title title={"Nova Categoria"} subtitle={"Crie uma nova categoria"} />
+        <Title
+          title="Nova Categoria"
+          subtitle="Crie uma nova categoria para suas transações"
+        />
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <div>
             <Input
               label="Nome"
-              placeholder="Nome da Categoria..."
+              placeholder="Nome da categoria..."
               {...register("title")}
+              error={formState.errors?.title?.message}
             />
-            <Input label="Cor" type="color" {...register("color")} />
+            <Input
+              label="Cor"
+              type="color"
+              {...register("color")}
+              error={formState.errors?.color?.message}
+            />
           </div>
           <footer>
             <Button onClick={handleClose} variant="outline" type="button">
               Cancelar
             </Button>
-            <Button type="button">Cadastrar</Button>
+            <Button type="submit">Cadastrar</Button>
           </footer>
         </form>
       </Container>

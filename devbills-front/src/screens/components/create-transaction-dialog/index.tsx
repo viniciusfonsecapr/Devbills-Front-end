@@ -4,8 +4,9 @@ import dayjs from "dayjs";
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { createTransactionSchema } from "../../../validators/schemas.ts";
-import { CreateTransactionData } from "../../../validators/types.ts";
+import { useFetchAPI } from "../../../hooks/useFetchAPI";
+import { createTransactionSchema } from "../../../validators/schemas";
+import { CreateTransactionData } from "../../../validators/types";
 import { Button } from "../button";
 import { Dialog } from "../dialog";
 import { Input } from "../input";
@@ -14,12 +15,11 @@ import {
   Container,
   Content,
   CurrencyInput,
+  ErrorMessage,
   InputGroup,
   RadioForm,
   RadioGroup,
-  ErrorMessage,
 } from "./styles";
-import { useFetchAPI } from "../../../hooks/useFetchAPI.tsx";
 
 export function CreateTransactionDialog() {
   const { categories, fetchCategories, createTransaction } = useFetchAPI();
@@ -33,7 +33,7 @@ export function CreateTransactionDialog() {
     defaultValues: {
       categoryId: "null",
       title: "",
-      amount: "",
+      amount: "0",
       date: dayjs("2024-01-01").format("DD/MM/YYYY"),
       type: "income",
     },
@@ -90,13 +90,12 @@ export function CreateTransactionDialog() {
               label="Nome"
               placeholder="Nome da transação..."
               {...register("title")}
-
-              // {errors.title?.message}
+              error={errors.title?.message}
             />
             <InputGroup>
               <label>Valor</label>
               <CurrencyInput
-                placeholder="R$ 0,00"
+                placeholder="R$0,00"
                 format="currency"
                 currency="BRL"
                 {...register("amount")}
@@ -113,7 +112,7 @@ export function CreateTransactionDialog() {
               label="Data"
               variant="black"
               placeholder="dd/mm/aaaa"
-              // error={errors.date?.message}
+              error={errors.date?.message}
               {...register("date")}
             />
 
@@ -144,7 +143,7 @@ export function CreateTransactionDialog() {
 
           <footer>
             <Button onClick={handleClose} variant="outline" type="button">
-              Calcelar
+              Cancelar
             </Button>
             <Button type="submit">Cadastrar</Button>
           </footer>

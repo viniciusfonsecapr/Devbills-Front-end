@@ -47,3 +47,21 @@ export const Content = styled(Dialog.Content)`
     }
   }
 `;
+
+export const Title = styled(Dialog.Title)`
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: ${theme.colors.light};
+  margin-bottom: 1rem;
+`;
+
+export const VisuallyHidden = styled.span`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden;
+`;

@@ -4,6 +4,7 @@ import { Container } from "./style";
 type InputProps = ComponentProps<"input"> & {
   label?: string;
   variant?: "black" | "dark";
+  error?: string;
 };
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(function (
