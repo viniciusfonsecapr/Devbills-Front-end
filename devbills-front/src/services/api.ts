@@ -4,12 +4,35 @@ import {
   CreateCategory,
   CreateTransaction,
   Transaction,
+  TransactionsFilter,
 } from "./api-types";
 
 export class APIService {
   private static client = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
   });
+
+  static async getTransactions({
+    title,
+    categoryId,
+    beginDate,
+    endDate,
+  }: TransactionsFilter): Promise<Transaction[]> {
+    const { data } = await APIService.client.get<Transaction[]>(
+      "/transactions",
+      {
+        params: {
+          title,
+          ...(title?.length && { title }),
+          ...(categoryId?.length && { categoryId }),
+          beginDate,
+          endDate,
+        },
+      }
+    );
+
+    return data;
+  }
 
   static async createTransaction(
     createTransactionData: CreateTransaction

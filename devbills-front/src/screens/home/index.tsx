@@ -1,3 +1,11 @@
+import dayjs from "dayjs";
+import { useForm } from "react-hook-form";
+import { InputMask } from "@react-input/mask";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { TransactionsFilterData } from "../../validators/types";
+import { transactionsFilterSchema } from "../../validators/schemas";
+
 import { Logo } from "../components/logo";
 import { Title } from "../components/title";
 import { Input } from "../components/input";
@@ -20,12 +28,40 @@ import { Card } from "../components/card";
 import { Transaction } from "../components/transaction";
 import { CreateCategoryDialog } from "../components/create-category-dialog";
 import { CreateTransactionDialog } from "../components/create-transaction-dialog";
-
-import { InputMask } from "@react-input/mask";
-import { CategoriesPieChart } from "../components/categories-pie-chart";
+import {
+  CategoriesPieChart,
+  CategoryProps,
+} from "../components/categories-pie-chart";
 import { FinancialEvolutionBarChart } from "../components/financial-evolution-bar-chart";
+import { useCallback, useState } from "react";
 
 export function Home() {
+  const transactionsFilterForm = useForm<TransactionsFilterData>({
+    defaultValues: {
+      title: "",
+      categoryId: "",
+      beginDate: dayjs().startOf("month").format("DD/MMMM/YYYYY"),
+      endDate: dayjs().endOf("month").format("DD/MMMM/YYYY"),
+    },
+    resolver: zodResolver(transactionsFilterSchema),
+  });
+
+  const [selectedCategory, setSelectedCategory] =
+    useState<CategoryProps | null>(null);
+
+  const handleSelectCategory = useCallback(
+    ({ id, title, color }: CategoryProps) => {
+      setSelectedCategory({ id, title, color });
+      transactionsFilterForm.setValue("categoryId", id);
+    },
+    [transactionsFilterForm]
+  );
+
+  const handleDeselectCategory = useCallback(() => {
+    setSelectedCategory(null);
+    transactionsFilterForm.setValue("categoryId", "");
+  }, [transactionsFilterForm]);
+
   return (
     <>
       <Header>
@@ -47,6 +83,10 @@ export function Home() {
                 variant="dark"
                 label="Inicio"
                 placeholder="dd/mm/aaaa"
+                error={
+                  transactionsFilterForm.formState.errors.beginDate?.message
+                }
+                {...transactionsFilterForm.register("beginDate")}
               />
               <InputMask
                 component={Input}
@@ -55,6 +95,8 @@ export function Home() {
                 variant="dark"
                 label="Fim"
                 placeholder="dd/mm/aaaa"
+                error={transactionsFilterForm.formState.errors.endDate?.message}
+                {...transactionsFilterForm.register("endDate")}
               />
               <ButtonIcon />
             </InputGroup>
@@ -72,7 +114,7 @@ export function Home() {
               />
             </header>
             <ChartContent>
-              <CategoriesPieChart />
+              <CategoriesPieChart onClick={handleSelectCategory} />
             </ChartContent>
           </ChartContainer>
           <ChartContainer>
@@ -103,6 +145,7 @@ export function Home() {
             <Title
               title={"Transações"}
               subtitle={"Receitas e gastos no periodo"}
+              {...transactionsFilterForm.register("title")}
             />
             <SearchTransaction>
               <Input variant="black" placeholder="Procurar transação..." />
