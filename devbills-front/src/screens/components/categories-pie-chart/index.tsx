@@ -2,28 +2,7 @@ import { ResponsivePie } from "@nivo/pie";
 import { useMemo } from "react";
 import { theme } from "../../../styles/theme";
 import { formatCurrency } from "../../../utils/format-currency";
-import { Category } from "../../../services/api-types";
-
-const apiData = [
-  {
-    _id: "1",
-    title: "Alimentação",
-    amount: 30000,
-    color: "#ff33bb",
-  },
-  {
-    _id: "2",
-    title: "Compras",
-    amount: 10000,
-    color: "#ff333b",
-  },
-  {
-    _id: "3",
-    title: "Streaming",
-    amount: 6000,
-    color: "#d4d46933c",
-  },
-];
+import { Expense } from "../../../services/api-types";
 
 export type CategoryProps = {
   id: string;
@@ -41,20 +20,27 @@ type ChartData = {
 
 type CategoriesPieChartProps = {
   onClick: (category: CategoryProps) => void;
+  expenses?: Expense[];
 };
 
-export function CategoriesPieChart({ onClick }: CategoriesPieChartProps) {
+export function CategoriesPieChart({
+  onClick,
+  expenses,
+}: CategoriesPieChartProps) {
   const data = useMemo<ChartData[]>(() => {
-    const chartData = apiData.map((item) => ({
-      id: item.title,
-      label: item.title,
-      externalId: item._id,
-      value: item.amount,
-      color: item.color,
-    }));
+    if (expenses?.length) {
+      const chartData = expenses?.map((item) => ({
+        id: item.title,
+        label: item.title,
+        externalId: item._id,
+        value: item.amount,
+        color: item.color,
+      }));
 
-    return chartData;
-  }, []);
+      return chartData;
+    }
+    return [];
+  }, [expenses]);
 
   return (
     <ResponsivePie

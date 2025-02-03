@@ -10,7 +10,7 @@ type TransactionProps = {
     title: string;
     color: string;
   };
-  variant?: "incomes" | "expense";
+  variant?: "income" | "expense";
 };
 
 export function Transaction({
@@ -19,7 +19,7 @@ export function Transaction({
   date,
   amount,
   category,
-  variant = "incomes",
+  variant = "income",
 }: TransactionProps) {
   return (
     <Container>

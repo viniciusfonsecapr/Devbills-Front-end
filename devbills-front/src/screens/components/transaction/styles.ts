@@ -2,12 +2,12 @@ import styled from "styled-components";
 import { theme } from "../../../styles/theme";
 
 type ContentType = {
-  $variant: "incomes" | "expense";
+  $variant: "income" | "expense";
   $tagColor: string;
 };
 
 const variantColorMap = {
-  incomes: theme.colors.sucess,
+  income: theme.colors.sucess,
   expense: theme.colors.error,
 };
 
