@@ -23,6 +23,7 @@ import {
   Aside,
   SearchTransaction,
   TransactionGroup,
+  CategoryBadge,
 } from "./styles";
 import { Card } from "../components/card";
 import { Transaction } from "../components/transaction";
@@ -35,6 +36,7 @@ import {
 import { FinancialEvolutionBarChart } from "../components/financial-evolution-bar-chart";
 import { useCallback, useEffect, useState } from "react";
 import { useFetchAPI } from "../../hooks/useFetchAPI";
+import { X } from "@phosphor-icons/react";
 
 export function Home() {
   const transactionsFilterForm = useForm<TransactionsFilterData>({
@@ -61,24 +63,28 @@ export function Home() {
     useState<CategoryProps | null>(null);
 
   const handleSelectCategory = useCallback(
-    ({ id, title, color }: CategoryProps) => {
+    async ({ id, title, color }: CategoryProps) => {
       setSelectedCategory({ id, title, color });
       transactionsFilterForm.setValue("categoryId", id);
+
+      await fetchTransactions(transactionsFilterForm.getValues());
     },
-    [transactionsFilterForm]
+    [transactionsFilterForm, fetchTransactions]
   );
 
-  const handleDeselectCategory = useCallback(() => {
+  const handleDeselectCategory = useCallback(async () => {
     setSelectedCategory(null);
     transactionsFilterForm.setValue("categoryId", "");
-  }, [transactionsFilterForm]);
 
-  const onSubmitTransactions = useCallback(
-    async (data: TransactionsFilterData) => {
-      await fetchTransactions(data);
-    },
-    [fetchTransactions]
-  );
+    await fetchTransactions(transactionsFilterForm.getValues());
+  }, [transactionsFilterForm, fetchTransactions]);
+
+  // const onSubmitTransactions = useCallback(
+  //   async (data: TransactionsFilterData) => {
+  //     await fetchTransactions(data);
+  //   },
+  //   [fetchTransactions]
+  // );
 
   const onSubmitDashboard = useCallback(
     async (data: TransactionsFilterData) => {
@@ -150,6 +156,17 @@ export function Home() {
                 title="Gastos"
                 subtitle="Despesas por categoria no periodo"
               />
+              {selectedCategory && (
+                <>
+                  <CategoryBadge
+                    $color={selectedCategory.color}
+                    onClick={handleDeselectCategory}
+                  >
+                    <X />
+                    {selectedCategory.title.toUpperCase()}
+                  </CategoryBadge>
+                </>
+              )}
             </header>
             <ChartContent>
               <CategoriesPieChart
