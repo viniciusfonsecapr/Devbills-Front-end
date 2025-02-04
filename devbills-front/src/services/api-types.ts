@@ -55,3 +55,14 @@ export type DashboardFilters = {
   beginDate: string;
   endDate: string;
 };
+
+export type FinancialEvolutionFilters = {
+  year: string;
+};
+
+export type FinancialEvolution = {
+  _id: [number, number];
+  incomes: number;
+  expenses: number;
+  balance: number;
+};
