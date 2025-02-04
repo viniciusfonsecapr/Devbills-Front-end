@@ -3,7 +3,10 @@ import { useForm } from "react-hook-form";
 import { InputMask } from "@react-input/mask";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { TransactionsFilterData } from "../../validators/types";
+import {
+  FinancialEvolutionFilterData,
+  TransactionsFilterData,
+} from "../../validators/types";
 import { transactionsFilterSchema } from "../../validators/schemas";
 
 import { Logo } from "../components/logo";
@@ -47,6 +50,12 @@ export function Home() {
       endDate: dayjs().endOf("month").format("DD/MM/YYYY"),
     },
     resolver: zodResolver(transactionsFilterSchema),
+  });
+
+  const financialEvolutionFilterForm = useForm<FinancialEvolutionFilterData>({
+    defaultValues: {
+      year: dayjs().get("year").toString(),
+    },
   });
 
   const { transactions, dashboard, fetchTransactions, fetchDashboard } =
@@ -189,13 +198,9 @@ export function Home() {
                   variant="black"
                   label="Ano"
                   placeholder="aaaa"
-                  // {...financialEvolutionFilterForm.register('year')}
+                  {...financialEvolutionFilterForm.register("year")}
                 />
-                <ButtonIcon
-                  onClick={transactionsFilterForm.handleSubmit(
-                    onSubmitDashboard
-                  )}
-                />
+                <ButtonIcon />
               </ChartAction>
             </header>
             <ChartContent>
