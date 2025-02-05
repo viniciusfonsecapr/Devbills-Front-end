@@ -58,15 +58,27 @@ export function Home() {
     },
   });
 
-  const { transactions, dashboard, fetchTransactions, fetchDashboard } =
-    useFetchAPI();
+  const {
+    transactions,
+    dashboard,
+    financialEvolution,
+    fetchFinancialEvolution,
+    fetchTransactions,
+    fetchDashboard,
+  } = useFetchAPI();
 
   useEffect(() => {
     const { beginDate, endDate } = transactionsFilterForm.getValues();
 
     fetchDashboard({ beginDate, endDate });
     fetchTransactions(transactionsFilterForm.getValues());
-  }, [fetchTransactions, transactionsFilterForm, fetchDashboard]);
+    fetchFinancialEvolution(financialEvolutionFilterForm.getValues());
+  }, [
+    fetchTransactions,
+    transactionsFilterForm,
+    fetchDashboard,
+    fetchFinancialEvolution,
+  ]);
 
   const [selectedCategory, setSelectedCategory] =
     useState<CategoryProps | null>(null);
@@ -204,7 +216,9 @@ export function Home() {
               </ChartAction>
             </header>
             <ChartContent>
-              <FinancialEvolutionBarChart />
+              <FinancialEvolutionBarChart
+                financialEvolution={financialEvolution}
+              />
             </ChartContent>
           </ChartContainer>
         </Section>
